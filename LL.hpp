@@ -1,6 +1,6 @@
-#include <iostream>
 #ifndef LL_H
 #define LL_H
+#include <iostream>
 
 struct Node
 {

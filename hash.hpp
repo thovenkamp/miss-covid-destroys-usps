@@ -4,7 +4,6 @@
 #include <iostream>
 #include <string>
 
-
 using namespace std;
 
 struct node
@@ -15,21 +14,15 @@ struct node
 
 class HashTable
 {
-    int tableSize;  // No. of buckets (linked lists)
-
-    // Pointer to an array containing buckets
-    node* *table;
+    int tableSize;      // No. of buckets (linked lists)
+    node* *table;       // Pointer to an array containing buckets
     int numOfcolision = 0;
     node* createNode(int key, node* next);
+
 public:
-    HashTable(int bsize);  // Constructor
-
-    // inserts a key into hash table
-    bool insertItem(int key);
-
-    // hash function to map values to key
-    unsigned int hashFunction(int key);
-
+    HashTable(int bsize);                   // Constructor
+    bool insertItem(int key);               // inserts a key into hash table
+    unsigned int hashFunction(int key);     // hash function to map values to key
     void printTable();
     int getNumOfCollision();
 
