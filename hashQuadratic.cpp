@@ -1,7 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include "hashLinear.hpp"
+#include <cmath>
+#include "hashQuadratic.hpp"
 
 using namespace std;
 
@@ -18,18 +19,22 @@ HashTable::HashTable(int bsize) // Constructor
 bool HashTable::insertItem(int key)
 {
     int hash = hashFunction(key); 
+    int index = hash;
+    int counter = 1;
+    
     node* temp = new node;
     temp->key = key;
     temp->next = NULL;
     
-    while (table[hash] != NULL)
+    while (table[index] != NULL)
     {
-        hash++;
-        numOfCollisions++;
+        index = hash + counter^2;
+        counter++; // increment counter
+        numOfCollisions++; // increment counter
     }
-    if(table[hash] == NULL)
+    if(table[index] == NULL)
     {
-        table[hash] = temp; // inserts item
+        table[index] = temp; // inserts item
         return true;
     }
     return false;

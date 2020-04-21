@@ -30,13 +30,6 @@ BST::BST(int data)
     cout<< "New tree created with "<<data<<endl;
 }
 
-/**
-Destructor
-**/
-
-
-
-
 
 /*
 Prints a binary tree in a 2D fashion.
@@ -80,13 +73,16 @@ We will call this function from addNode.
 
 Node* BST:: addNodeHelper(Node* currNode, int data)
 {
-    if(currNode == NULL){
+    if(currNode == NULL)
+    {
         return createNode(data);
     }
-    else if(currNode->key < data){
+    else if(currNode->key < data)
+    {
         currNode->right = addNodeHelper(currNode->right,data);
     }
-    else if(currNode->key > data){
+    else if(currNode->key > data)
+    {
         currNode->left = addNodeHelper(currNode->left,data);
     }
     return currNode;
@@ -106,7 +102,8 @@ void BST:: addNode(int data)
 printTree() function will call this function.
 **/
 
-void BST:: printTreeHelper(Node* currNode){
+void BST:: printTreeHelper(Node* currNode)
+{
      if(currNode)
      {
         printTreeHelper( currNode->left);
@@ -115,7 +112,8 @@ void BST:: printTreeHelper(Node* currNode){
      }
  }
 
-void BST:: printTree(){
+void BST:: printTree()
+{
      printTreeHelper(root);
      cout<<endl;
 }

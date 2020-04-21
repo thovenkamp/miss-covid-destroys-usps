@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
     else
     {
         string line = "";
-        for(int i = 0; i < 40000; i++) // loops through the array and sets all elements to 0 
+        for(int i = 0; i <= 40000; i++) // loops through the array and sets all elements to 0 
         {
             getline(myfile,line,',');
             hashT.insertItem(stoi(line));

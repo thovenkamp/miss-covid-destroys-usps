@@ -1,5 +1,5 @@
-#ifndef HASHCHAINING_HPP
-#define HASHCHAINING_HPP
+#ifndef HASHQUADRATIC_HPP
+#define HASHQUADRATIC_HPP
 
 #include <iostream>
 #include <string>

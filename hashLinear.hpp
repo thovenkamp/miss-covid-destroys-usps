@@ -25,7 +25,6 @@ public:
     unsigned int hashFunction(int key);     // hash function to map values to key
     void printTable();
     int getNumOfCollisions();
-
     node* searchItem(int key);
 };
 
