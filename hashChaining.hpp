@@ -1,5 +1,5 @@
-#ifndef HASH_HPP
-#define HASH_HPP
+#ifndef HASHCHAINING_HPP
+#define HASHCHAINING_HPP
 
 #include <iostream>
 #include <string>
@@ -16,7 +16,7 @@ class HashTable
 {
     int tableSize;      // No. of buckets (linked lists)
     node* *table;       // Pointer to an array containing buckets
-    int numOfcolision = 0;
+    int numOfCollisions = 0;
     node* createNode(int key, node* next);
 
 public:
@@ -24,7 +24,7 @@ public:
     bool insertItem(int key);               // inserts a key into hash table
     unsigned int hashFunction(int key);     // hash function to map values to key
     void printTable();
-    int getNumOfCollision();
+    int getNumOfCollisions();
 
     node* searchItem(int key);
 };

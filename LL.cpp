@@ -85,11 +85,10 @@ void LL::printLL()
 
     while(temp->next != NULL)
     {
-        cout<< temp->key <<" -> ";
+        cout << temp->key << " -> ";
         temp = temp->next;
     }
-
-    cout<<temp->key<<endl;
+    cout << temp->key << endl;
 }
 
 // Search for a specified key and return a pointer to that node
