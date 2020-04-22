@@ -1,6 +1,10 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <ctime>
+#include <chrono>
+#include <stdlib.h>
+#include <time.h>
 
 #include "LL.hpp"
 
@@ -8,9 +12,19 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
+    LL linkedList;
     int testData[40000]; // all data will be stored in this array
     float insert[400];
     float search[400];
+       
+    //search ... filling up arrays
+    srand(time(nullptr));
+    int values[100];
+    int searched[100];
+    for(int i = 0; i < 100; i++)
+    {
+        values[i] = rand() % 100; // values 0 - 99
+    }
     
     if(argc < 2) // if there are less than 2 arguments (if no file name is specified)
     {
@@ -28,15 +42,29 @@ int main(int argc, char* argv[])
     else
     {
         string line = "";
+        int count = 0;
+        float startTimeInsert = clock();
         for(int i = 0; i < 40000; i++) // loops through the array and sets all elements to 0 
         {
             getline(myfile,line,',');
             testData[i] = stoi(line);
+            if(i % 100 == 0)
+            {
+                float endTimeInsert = clock();
+                float insertTime = (endTimeInsert - startTimeInsert) / 100;
+                insert[count] = insertTime;
+                count++;
+                startTimeInsert = endTimeInsert;
+
+                float startTimeSearch = clock();
+                for(int j = 0; j < 100; j++)
+                {
+                    testData[values[j]] = searched[j];
+                }
+                float endTimeSearch = clock();
+                float searchTime = (endTimeSearch - startTimeSearch) / 100;
+                search[0] = searchTime;
+            }
         }
     }
-    for(int i = 0; i < 100; i++)
-    {
-        cout << testData[i] << " " << endl;
-    }
-    
 }
