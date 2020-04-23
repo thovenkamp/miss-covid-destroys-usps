@@ -9,6 +9,14 @@ int main(int argc, char* argv[])
     float insert[400];
     float search[400];
     BST tree;
+
+    //search ... filling up arrays
+    srand(time(nullptr));
+    int values[100];
+    int searched[100];
+    int total = 100;
+    int trials = 0;
+    int count = 0;
     
     if(argc < 2) // if there are less than 2 arguments (if no file name is specified)
     {
@@ -26,11 +34,41 @@ int main(int argc, char* argv[])
     else
     {
         string line = "";
-        for(int i = 0; i <= 40000; i++) // loops through the array
+        float startTimeInsert = clock();
+        for(int i = 0; i < 40000; i++) // loops through the array
         {
             getline(myfile,line,',');
-            tree.addNode(stoi(line)); // creating tree
+            testData[i] = stoi(line);
+            tree.addNode(testData[i]); // creating tree
+            //////// may not work lmao ///////////
+            if(i % 100 == 0) // every 100
+            {
+                float endTimeInsert = clock();
+                float insertTime = (endTimeInsert - startTimeInsert) / 100;
+                insert[count] = insertTime;
+                startTimeInsert = endTimeInsert;
+
+
+                for(int i = 0; i < 100; i++)
+                {
+                    values[i] = rand() % total; // values 0 - total
+                }
+                float startTimeSearch = clock();
+                cout << startTimeSearch << endl;
+                for(int j = 0; j < 100; j++)
+                {
+                    tree.searchKey(values[j]);
+                }
+                float endTimeSearch = clock();
+                float searchTime = (endTimeSearch - startTimeSearch) / 100;
+                total += 100;
+                search[count] = searchTime;
+                count++;
+            }
+            ///////////////////////////
         }
     }
     return 0;
 }
+
+///////////////////////////////

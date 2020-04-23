@@ -1,7 +1,15 @@
 #include <iostream>
+#include <chrono>
+#include <ctime>
+#include <unistd.h>
 #include "LL.hpp"
 
 using namespace std;
+
+Node* LL::getHead()
+{
+    return head;
+}
 
 // Add a new node to the list
 void LL::insert(Node* prev, int inKey)

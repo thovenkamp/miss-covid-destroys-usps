@@ -18,6 +18,7 @@ class LL
     {
         head = NULL;
     }
+    Node* getHead();
     void insert(Node *prev, int inKey);
     Node* searchLL(int key);
     bool deleteAtIndex(int index);

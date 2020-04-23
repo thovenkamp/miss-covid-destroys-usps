@@ -21,10 +21,10 @@ int main(int argc, char* argv[])
     srand(time(nullptr));
     int values[100];
     int searched[100];
-    for(int i = 0; i < 100; i++)
-    {
-        values[i] = rand() % 100; // values 0 - 99
-    }
+    int total = 100;
+    int trials = 0;
+    int count = 0;
+    
     
     if(argc < 2) // if there are less than 2 arguments (if no file name is specified)
     {
@@ -42,29 +42,40 @@ int main(int argc, char* argv[])
     else
     {
         string line = "";
-        int count = 0;
-        float startTimeInsert = clock();
-        for(int i = 0; i < 40000; i++) // loops through the array and sets all elements to 0 
+        clock_t startTimeInsert = clock();
+        for(int i = 0; i < 40000; i++) // loops through the array
         {
             getline(myfile,line,',');
             testData[i] = stoi(line);
-            if(i % 100 == 0)
+            linkedList.insert(NULL, testData[i]); // inserts everything at the head
+            if(i % 100 == 99) // every 100
             {
-                float endTimeInsert = clock();
-                float insertTime = (endTimeInsert - startTimeInsert) / 100;
+                clock_t endTimeInsert = clock();
+                float insertTime = (float)(endTimeInsert - startTimeInsert) / 100;
                 insert[count] = insertTime;
-                count++;
                 startTimeInsert = endTimeInsert;
 
-                float startTimeSearch = clock();
+
                 for(int j = 0; j < 100; j++)
                 {
-                    testData[values[j]] = searched[j];
+                    values[j] = rand() % total; // values 0 to total-1
                 }
-                float endTimeSearch = clock();
-                float searchTime = (endTimeSearch - startTimeSearch) / 100;
-                search[0] = searchTime;
+                total += 100;
+				
+                clock_t startTimeSearch = clock();
+                for(int j = 0; j < 100; j++)
+                {
+                    linkedList.searchLL(values[j]);
+                }
+                clock_t endTimeSearch = clock();
+                float searchTime = (float)(endTimeSearch - startTimeSearch) / 100;
+                search[count] = searchTime;
+                count++;
             }
         }
+    }
+	for(int i = 0; i < 400; i++)
+    {
+        cout << (float)search[i]/CLOCKS_PER_SEC << endl;
     }
 }

@@ -93,7 +93,7 @@ Node* BST:: addNodeHelper(Node* currNode, int data)
 void BST:: addNode(int data)
 {
     root = addNodeHelper(root, data);
-    cout<<data<<" has been added"<<endl;
+    // cout<<data<<" has been added"<<endl;
 }
 
 //-----------------------------------------PRINT TREE (INORDER TRAVERSAL)--------------------------------
@@ -145,7 +145,7 @@ bool BST::searchKey(int key)
     {
         return true;
     }
-    cout << "Key not present in the tree" << endl;
+    //cout << "Key not present in the tree" << endl;
     return false;
 }
 
