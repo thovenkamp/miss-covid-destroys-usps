@@ -1,5 +1,7 @@
 #include <iostream>
 #include <fstream>
+#include <chrono>
+#include <iomanip>
 #include "BST.hpp"
 using namespace std;
 
@@ -34,33 +36,41 @@ int main(int argc, char* argv[])
     else
     {
         string line = "";
-        float startTimeInsert = clock();
+        auto startTimeInsert = chrono::high_resolution_clock::now();
         for(int i = 0; i < 40000; i++) // loops through the array
         {
             getline(myfile,line,',');
             testData[i] = stoi(line);
             tree.addNode(testData[i]); // creating tree
             //////// may not work lmao ///////////
-            if(i % 100 == 0) // every 100
+            
+            if(i % 100 == 99);
             {
-                float endTimeInsert = clock();
-                float insertTime = (endTimeInsert - startTimeInsert) / 100;
+
+                
+
+                auto endTimeInsert = chrono::high_resolution_clock::now();
+                double insertTime = (chrono::duration_cast<chrono::nanoseconds>(endTimeInsert-startTimeInsert).count()) * 1e-9 / 100;//(float)(endTimeInsert - startTimeInsert);
                 insert[count] = insertTime;
                 startTimeInsert = endTimeInsert;
 
-
-                for(int i = 0; i < 100; i++)
+                for(int j = 0; j < 100; j++)
                 {
-                    values[i] = rand() % total; // values 0 - total
+                    values[j] = rand() % total; // values 0 - total
                 }
-                float startTimeSearch = clock();
-                cout << startTimeSearch << endl;
+                auto startTimeSearch = chrono::high_resolution_clock::now();
                 for(int j = 0; j < 100; j++)
                 {
                     tree.searchKey(values[j]);
                 }
-                float endTimeSearch = clock();
-                float searchTime = (endTimeSearch - startTimeSearch) / 100;
+                auto endTimeSearch = chrono::high_resolution_clock::now();
+                double searchTime = (chrono::duration_cast<chrono::nanoseconds>(endTimeSearch-startTimeSearch).count()) * 1e-9 / 100;
+                
+                if(count < 40000)
+                {
+                    cout << insertTime << endl;
+                }
+                // double time_taken = double(end - start) / double(CLOCKS_PER_SEC); 
                 total += 100;
                 search[count] = searchTime;
                 count++;
@@ -68,7 +78,10 @@ int main(int argc, char* argv[])
             ///////////////////////////
         }
     }
-    return 0;
+    for(int i = 0; i < 400; i++)
+    {
+        //cout << (float)insert[i] / float(CLOCKS_PER_SEC) << endl;
+    }
 }
 
 ///////////////////////////////

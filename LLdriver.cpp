@@ -4,6 +4,7 @@
 #include <ctime>
 #include <chrono>
 #include <stdlib.h>
+#include <iomanip>
 #include <time.h>
 
 #include "LL.hpp"
@@ -42,16 +43,20 @@ int main(int argc, char* argv[])
     else
     {
         string line = "";
-        clock_t startTimeInsert = clock();
+        auto startTimeInsert = chrono::high_resolution_clock::now();
         for(int i = 0; i < 40000; i++) // loops through the array
         {
             getline(myfile,line,',');
             testData[i] = stoi(line);
-            linkedList.insert(NULL, testData[i]); // inserts everything at the head
+            if(linkedList.searchLL(values[i]) == NULL)
+            {
+                linkedList.insert(NULL, testData[i]); // inserts everything at the head
+            }
             if(i % 100 == 99) // every 100
             {
-                clock_t endTimeInsert = clock();
-                float insertTime = (float)(endTimeInsert - startTimeInsert) / 100;
+                auto endTimeInsert = chrono::high_resolution_clock::now();
+                double insertTime = (chrono::duration_cast<chrono::nanoseconds>(endTimeInsert-startTimeInsert).count()) * 1e-9 / 100;
+                // float insertTime = (float)((endTimeInsert - startTimeInsert) / 100);
                 insert[count] = insertTime;
                 startTimeInsert = endTimeInsert;
 
@@ -62,20 +67,26 @@ int main(int argc, char* argv[])
                 }
                 total += 100;
 				
-                clock_t startTimeSearch = clock();
+                auto startTimeSearch = chrono::high_resolution_clock::now();
                 for(int j = 0; j < 100; j++)
                 {
                     linkedList.searchLL(values[j]);
                 }
-                clock_t endTimeSearch = clock();
-                float searchTime = (float)(endTimeSearch - startTimeSearch) / 100;
+                auto endTimeSearch = chrono::high_resolution_clock::now();
+                double searchTime = (chrono::duration_cast<chrono::nanoseconds>(endTimeSearch-startTimeSearch).count()) * 1e-9 / 100;
+                // float searchTime = (float)((endTimeSearch - startTimeSearch) / 100);
+
+                if(count < 40000)
+                {
+                    cout << insertTime << endl;
+                }
                 search[count] = searchTime;
                 count++;
             }
         }
     }
-	for(int i = 0; i < 400; i++)
-    {
-        cout << (float)search[i]/CLOCKS_PER_SEC << endl;
-    }
+	// for(int i = 0; i < 400; i++)
+    // {
+    //     cout << (float)insert[i]/CLOCKS_PER_SEC << endl;
+    // }
 }
