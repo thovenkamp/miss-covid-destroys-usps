@@ -28,16 +28,12 @@ bool HashTable::insertItem(int key)
     
     while (table[hash] != NULL)
     {
-        hash = (hash + (counter*counter)) % tableSize;
-        counter++; // increment counter
+        hash = (hash + counter) % tableSize;
+        counter+=2; // increment counter
         numOfCollisions++; // increment counter
     }
-    if(table[hash] == NULL)
-    {
-        table[hash] = temp; // inserts item
-        return true;
-    }
-    return false;
+    table[hash] = temp; // inserts item
+    return true;
 }
 
 unsigned int HashTable::hashFunction(int key) // hash function to map values to key. unsigned = cannot be negative integer
@@ -65,8 +61,9 @@ node* HashTable::searchItem(int key)
 
     while(table[hash] != NULL && table[hash]->key != key)
     {
-        hash = (hash + (counter*counter)) % tableSize;
-        counter++; // increment counter
+        hash = (hash + counter) % tableSize;
+        counter+=2; // increment counter
+        numOfCollisions++; // increment counter
     }
     return table[hash];
 }
