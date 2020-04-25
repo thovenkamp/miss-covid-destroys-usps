@@ -3,9 +3,7 @@
 #include <string>
 #include <ctime>
 #include <chrono>
-#include <stdlib.h>
 #include <iomanip>
-#include <time.h>
 
 #include "LL.hpp"
 
@@ -48,18 +46,16 @@ int main(int argc, char* argv[])
         {
             getline(myfile,line,',');
             testData[i] = stoi(line);
-            if(linkedList.searchLL(values[i]) == NULL)
-            {
-                linkedList.insert(NULL, testData[i]); // inserts everything at the head
-            }
+            // if(linkedList.searchLL(values[i]) == NULL) // this was for checking for duplicates but we're allowing duplicates now
+            // {
+            linkedList.insert(NULL, testData[i]); // inserts everything at the head
+            // }
             if(i % 100 == 99) // every 100
             {
                 auto endTimeInsert = chrono::high_resolution_clock::now();
-                double insertTime = (chrono::duration_cast<chrono::nanoseconds>(endTimeInsert-startTimeInsert).count()) * 1e-9 / 100;
+                double insertTime = (chrono::duration_cast<chrono::nanoseconds>(endTimeInsert-startTimeInsert).count()) * 1e-2;
                 // float insertTime = (float)((endTimeInsert - startTimeInsert) / 100);
                 insert[count] = insertTime;
-                startTimeInsert = endTimeInsert;
-
 
                 for(int j = 0; j < 100; j++)
                 {
@@ -73,20 +69,37 @@ int main(int argc, char* argv[])
                     linkedList.searchLL(values[j]);
                 }
                 auto endTimeSearch = chrono::high_resolution_clock::now();
-                double searchTime = (chrono::duration_cast<chrono::nanoseconds>(endTimeSearch-startTimeSearch).count()) * 1e-9 / 100;
+                double searchTime = (chrono::duration_cast<chrono::nanoseconds>(endTimeSearch-startTimeSearch).count()) * 1e-2;
                 // float searchTime = (float)((endTimeSearch - startTimeSearch) / 100);
 
-                if(count < 40000)
-                {
-                    cout << insertTime << endl;
-                }
+                // if(count < 40000)
+                // {
+                //     cout << insertTime << endl;
+                // }
                 search[count] = searchTime;
                 count++;
+                startTimeInsert = chrono::high_resolution_clock::now(); // resets clock
             }
         }
     }
-	// for(int i = 0; i < 400; i++)
-    // {
-    //     cout << (float)insert[i]/CLOCKS_PER_SEC << endl;
-    // }
+
+    ofstream outFile;
+    string outPut = argv[2];
+    outFile.open(outPut, ios::out | ios::app);
+    
+    for(int i = 0; i < 400; i++)
+    {
+        outFile << endl << insert[i] << endl;
+    }
+    outFile.close();
+
+    ofstream outFile2;
+    string outPut2 = argv[3];
+    outFile2.open(outPut2, ios::out | ios::app);
+    for(int i = 0; i < 400; i++)
+    {
+        outFile2 << endl << search[i] << endl;
+    }
+    outFile2.close();
+    return 0;
 }

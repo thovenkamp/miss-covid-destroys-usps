@@ -43,17 +43,14 @@ int main(int argc, char* argv[])
             testData[i] = stoi(line);
             tree.addNode(testData[i]); // creating tree
             //////// may not work lmao ///////////
-            
-            if(i % 100 == 99);
+            if(i % 100 == 99); // 100 elements have been inserted
             {
 
-                
-
-                auto endTimeInsert = chrono::high_resolution_clock::now();
-                double insertTime = (chrono::duration_cast<chrono::nanoseconds>(endTimeInsert-startTimeInsert).count()) * 1e-9 / 100;//(float)(endTimeInsert - startTimeInsert);
+    
+                auto endTimeInsert = chrono::high_resolution_clock::now(); //marks end time after 100 elements have been added
+                double insertTime = (chrono::duration_cast<chrono::nanoseconds>(endTimeInsert-startTimeInsert).count()) * 1e-2;//(float)(endTimeInsert - startTimeInsert);
                 insert[count] = insertTime;
-                startTimeInsert = endTimeInsert;
-
+            
                 for(int j = 0; j < 100; j++)
                 {
                     values[j] = rand() % total; // values 0 - total
@@ -64,24 +61,39 @@ int main(int argc, char* argv[])
                     tree.searchKey(values[j]);
                 }
                 auto endTimeSearch = chrono::high_resolution_clock::now();
-                double searchTime = (chrono::duration_cast<chrono::nanoseconds>(endTimeSearch-startTimeSearch).count()) * 1e-9 / 100;
+                double searchTime = (chrono::duration_cast<chrono::nanoseconds>(endTimeSearch-startTimeSearch).count()) * 1e-2;
                 
-                if(count < 40000)
-                {
-                    cout << insertTime << endl;
-                }
+                // if(count < 40000)
+                // {
+                //     cout << insertTime << endl;
+                // }
                 // double time_taken = double(end - start) / double(CLOCKS_PER_SEC); 
                 total += 100;
                 search[count] = searchTime;
                 count++;
+                startTimeInsert = chrono::high_resolution_clock::now(); // resets clock
             }
             ///////////////////////////
         }
     }
+    
+    ofstream outFile;
+    string outPut = argv[2];
+    outFile.open(outPut, ios::out | ios::app);
+    
     for(int i = 0; i < 400; i++)
     {
-        //cout << (float)insert[i] / float(CLOCKS_PER_SEC) << endl;
+        outFile << endl << insert[i] << endl;
     }
-}
+    outFile.close();
 
-///////////////////////////////
+    ofstream outFile2;
+    string outPut2 = argv[3];
+    outFile2.open(outPut2, ios::out | ios::app);
+    for(int i = 0; i < 400; i++)
+    {
+        outFile2 << endl << search[i] << endl;
+    }
+    outFile2.close();
+    return 0;
+}

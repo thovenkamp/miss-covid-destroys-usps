@@ -24,7 +24,7 @@ bool HashTable::insertItem(int key)
     
     while (table[hash] != NULL)
     {
-        hash++;
+        hash = (hash+1) % tableSize;
         numOfCollisions++;
     }
     if(table[hash] == NULL)
@@ -55,13 +55,21 @@ int HashTable::getNumOfCollisions()
 
 node* HashTable::searchItem(int key)
 {
-    unsigned int hash = hashFunction(key); //find hash value for key
-    for (int i = 0; i < tableSize; i++)
+    // unsigned int hash = hashFunction(key); //find hash value for key
+    // for (int i = 0; i < tableSize; i++)
+    // {
+    //     if (table[i]->key == key) //goes through entire table, if key is found
+    //     {
+    //         return table[i]; //return node at index i
+    //     }
+    // }
+    // return NULL;
+
+    unsigned int hash = hashFunction(key); // index to look for
+    
+    while(table[hash] != NULL && table[hash]->key != key)
     {
-        if (table[i]->key == key) //goes through entire table, if key is found
-        {
-            return table[i]; //return node at index i
-        }
+        hash = (hash+1) % tableSize;
     }
-    return NULL;
+    return table[hash];
 }

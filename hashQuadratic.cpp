@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <cmath>
+#include <iomanip>
 #include "hashQuadratic.hpp"
 
 using namespace std;
@@ -19,22 +20,21 @@ HashTable::HashTable(int bsize) // Constructor
 bool HashTable::insertItem(int key)
 {
     int hash = hashFunction(key); 
-    int index = hash;
     int counter = 1;
     
     node* temp = new node;
     temp->key = key;
     temp->next = NULL;
     
-    while (table[index] != NULL)
+    while (table[hash] != NULL)
     {
-        index = hash + counter^2;
+        hash = (hash + (counter*counter)) % tableSize;
         counter++; // increment counter
         numOfCollisions++; // increment counter
     }
-    if(table[index] == NULL)
+    if(table[hash] == NULL)
     {
-        table[index] = temp; // inserts item
+        table[hash] = temp; // inserts item
         return true;
     }
     return false;
@@ -60,13 +60,13 @@ int HashTable::getNumOfCollisions()
 
 node* HashTable::searchItem(int key)
 {
-    unsigned int hash = hashFunction(key); //find hash value for key
-    for (int i = 0; i < tableSize; i++)
+    int counter = 1;
+    unsigned int hash = hashFunction(key); // index to look for
+
+    while(table[hash] != NULL && table[hash]->key != key)
     {
-        if (table[i]->key == key) //goes through entire table, if key is found
-        {
-            return table[i]; //return node at index i
-        }
+        hash = (hash + (counter*counter)) % tableSize;
+        counter++; // increment counter
     }
-    return NULL;
+    return table[hash];
 }

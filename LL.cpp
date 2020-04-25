@@ -37,7 +37,6 @@ void LL::insert(Node* prev, int inKey)
         newNode->key = inKey;
         newNode->next = prev->next;
         prev->next = newNode;
-
     }
 }
 
