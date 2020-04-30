@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
             hashT.insertItem(stoi(line));
             if(i % 100 == 99); // 100 elements have been inserted
             {
-                auto endTimeInsert = chrono::high_resolution_clock::now(); //marks end time after 100 elements have been added
+                auto endTimeInsert = chrono::high_resolution_clock::now(); // marks end time after 100 elements have been added
                 double insertTime = (chrono::duration_cast<chrono::nanoseconds>(endTimeInsert-startTimeInsert).count()) * 1e-2; // in nanoseconds (and already taking / 100 into account)
                 insert[count] = insertTime;
 

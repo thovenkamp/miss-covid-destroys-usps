@@ -42,7 +42,6 @@ int main(int argc, char* argv[])
             getline(myfile,line,',');
             testData[i] = stoi(line);
             tree.addNode(testData[i]); // creating tree
-            //////// may not work lmao ///////////
             if(i % 100 == 99); // 100 elements have been inserted
             {
 
@@ -73,7 +72,6 @@ int main(int argc, char* argv[])
                 count++;
                 startTimeInsert = chrono::high_resolution_clock::now(); // resets clock
             }
-            ///////////////////////////
         }
     }
     

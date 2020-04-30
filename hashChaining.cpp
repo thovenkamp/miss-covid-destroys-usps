@@ -7,7 +7,7 @@ using namespace std;
 
 HashTable::HashTable(int bsize) // Constructor
 {
-    tableSize = bsize;
+    tableSize = bsize; //sets hash table size to parameter
     table = new node*[tableSize]; // dynamically allocating new array of nodes for table
     for(int i = 0; i < tableSize; i++) // filling up array w NULL pointers
     {
@@ -17,25 +17,25 @@ HashTable::HashTable(int bsize) // Constructor
 
 bool HashTable::insertItem(int key)
 {
-    int hash = hashFunction(key); 
-    node* temp = new node;
-    temp->key = key;
-    temp->next = NULL;
+    int hash = hashFunction(key); // call to hashFunction to get hash value
+    node* temp = new node;  // create new temp node with key value
+    temp->key = key; // setting key
+    temp->next = NULL; // setting next pointer
     
-    node* crawler = table[hash];
-    if(crawler == NULL)
+    node* crawler = table[hash]; // sets crawler to index with hash value
+    if(crawler == NULL) // if the crawler is null (open space)
     {
         table[hash] = temp;
         return true;
     }
-    numOfCollisions++;
-    while(crawler->next != NULL)
+    numOfCollisions++; // else, crawler is not NULL, meaning there has been a collision.
+    while(crawler->next != NULL) // iterates through list until it finds an open space
     {
         crawler = crawler->next; // keep going until you find an open index in the array
     }
-    crawler->next = temp;
-    
-    return false;
+    crawler->next = temp; // open space found
+
+    return true;
 }
 
 unsigned int HashTable::hashFunction(int key) // hash function to map values to key. unsigned = cannot be negative integer
@@ -47,7 +47,7 @@ void HashTable::printTable()
 {
     for(int i = 0; i < tableSize; i++)
     {
-        node* crawler = table[i];
+        node* crawler = table[i]; //crawler to get through 
         while(crawler != NULL)
         {
             cout << crawler->key << endl; // prints all keys from linked list at one node
@@ -63,11 +63,11 @@ int HashTable::getNumOfCollisions()
 
 node* HashTable::searchItem(int key)
 {
-    unsigned int hash = hashFunction(key);
-    node* crawler = table[hash];
+    unsigned int hash = hashFunction(key); //find hash value using key
+    node* crawler = table[hash];  //creates crawler starting at index of hash
     while (crawler != NULL && crawler->key != key) //keeps looping until key is found 
     {
-        crawler = crawler->next; // keep going through table
+        crawler = crawler->next; // keep going through table until key is found 
     }
     return crawler;
 }

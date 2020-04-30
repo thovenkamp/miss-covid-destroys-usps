@@ -6,7 +6,7 @@
 
 using namespace std;
 
-Node* LL::getHead()
+Node* LL::getHead() // accessor for the head node
 {
     return head;
 }
@@ -17,21 +17,22 @@ void LL::insert(Node* prev, int inKey)
     //Check if head is Null i.e list is empty
     if(head == NULL)
     {
-        head = new Node;
+        head = new Node; //creates new node that is head of empty linked list
         head->key = inKey;
         head->next = NULL;
     }
 
     // if list is not empty, look for prev and append our node there
-    else if(prev == NULL)
+    // utilized in our implementation, since we always decide to insert at the head
+    else if(prev == NULL)   // inserting at head (but not empty linked list initially)
     {
         Node* newNode = new Node;
         newNode->key = inKey;
         newNode->next = head;
-        head = newNode;
+        head = newNode; // the node inserted is /now/ the head
     }
 
-    else
+    else // if you want to insert in the middle of the linked list
     {
         Node* newNode = new Node;
         newNode->key = inKey;
@@ -43,20 +44,20 @@ void LL::insert(Node* prev, int inKey)
 // Deletes node at a certain index
 bool LL::deleteAtIndex(int n)
 {
-    bool isDeleted = false;
+    bool isDeleted = false; // flag for if node is deleted
     Node  *temp;
 
-    if(head == NULL)
+    if(head == NULL) //list is empty, no nodes
     {
         cout<< "List is already empty"<<endl;
-        return isDeleted;
+        return isDeleted; //returns false
     }
 
     // Special case to delete the head
     if (n == 0) 
     {
-        temp = head;
-        head = head->next;
+        temp = head;      //deletes head
+        head = head->next;  //head set to next node
         delete temp;
         isDeleted = true; // set flag true here
         return isDeleted;
@@ -66,7 +67,7 @@ bool LL::deleteAtIndex(int n)
     Node *prev = NULL;
 
     int i = 0;
-    while(i != n && pres->next != NULL)
+    while(i != n && pres->next != NULL) //keeps going down list with two crawlers
     {
         prev = pres;
         pres = pres->next;
@@ -90,7 +91,7 @@ void LL::printLL()
 {
     Node* temp = head;
 
-    while(temp->next != NULL)
+    while(temp->next != NULL)   
     {
         cout << temp->key << " -> ";
         temp = temp->next;
@@ -101,7 +102,7 @@ void LL::printLL()
 // Search for a specified key and return a pointer to that node
 Node* LL::searchLL(int key)
 {
-    Node* ptr = head;
+    Node* ptr = head;  //set pointer to head
     while (ptr != NULL && ptr->key != key)
     {
         ptr = ptr->next; // keep going through list until you find the key you want
